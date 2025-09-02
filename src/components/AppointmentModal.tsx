@@ -26,9 +26,28 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose }) 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí enviarías los datos a tu backend
-    console.log('Cita agendada:', formData);
+    
+    // Crear objeto de cita con ID único
+    const newAppointment = {
+      id: Date.now().toString(),
+      ...formData,
+      status: 'pending' as const,
+      createdAt: new Date().toISOString()
+    };
+
+    // Obtener citas existentes del localStorage
+    const existingAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+    
+    // Agregar nueva cita
+    const updatedAppointments = [...existingAppointments, newAppointment];
+    
+    // Guardar en localStorage
+    localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
+    
+    console.log('Cita agendada:', newAppointment);
     alert('¡Cita agendada exitosamente! Te contactaremos pronto para confirmar.');
+    
+    // Limpiar formulario
     setFormData({
       name: '',
       email: '',

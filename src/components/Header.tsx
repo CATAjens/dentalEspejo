@@ -43,6 +43,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenAppointment }) => {
             <li><a href="#testimonials" onClick={() => scrollToSection('testimonials')}>Pacientes</a></li>
             <li><a href="#gallery" onClick={() => scrollToSection('gallery')}>Galería</a></li>
             <li><a href="#" className="nav-cta" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>Agendar</a></li>
+            <li><a href="/admin" className="nav-admin">Admin</a></li>
           </ul>
           <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
             <div className="line"></div>
