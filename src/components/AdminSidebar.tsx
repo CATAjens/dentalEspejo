@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface AdminSidebarProps {
   activeTab: string;
@@ -6,6 +7,13 @@ interface AdminSidebarProps {
 }
 
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, onTabChange }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    navigate('/login');
+  };
+
   const menuItems = [
     {
       id: 'dashboard',
@@ -53,9 +61,9 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, onTabChange }) =
       </nav>
       
       <div className="sidebar-footer">
-        <a href="/" className="btn btn-outline btn-sm">
-          <i className="fas fa-home"></i> Volver al Sitio
-        </a>
+        <button className="btn btn-outline btn-sm" onClick={handleLogout}>
+          <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </button>
       </div>
     </div>
   );

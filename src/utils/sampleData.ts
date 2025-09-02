@@ -1,4 +1,43 @@
 // Datos de ejemplo para el dashboard de administración
+export const sampleUsers = [
+  {
+    id: '1',
+    name: 'Dr. María González',
+    email: 'maria.gonzalez@clinicadental.com',
+    password: 'password123',
+    isActive: true,
+    role: 'admin',
+    createdAt: '2024-01-01T10:00:00Z'
+  },
+  {
+    id: '2',
+    name: 'Dr. Carlos Ruiz',
+    email: 'carlos.ruiz@clinicadental.com',
+    password: 'password123',
+    isActive: true,
+    role: 'doctor',
+    createdAt: '2024-01-02T10:00:00Z'
+  },
+  {
+    id: '3',
+    name: 'Ana López',
+    email: 'ana.lopez@clinicadental.com',
+    password: 'password123',
+    isActive: false,
+    role: 'receptionist',
+    createdAt: '2024-01-03T10:00:00Z'
+  },
+  {
+    id: '4',
+    name: 'Roberto Méndez',
+    email: 'roberto.mendez@clinicadental.com',
+    password: 'password123',
+    isActive: true,
+    role: 'doctor',
+    createdAt: '2024-01-04T10:00:00Z'
+  }
+];
+
 export const sampleAppointments = [
   {
     id: '1',
@@ -76,9 +115,15 @@ export const sampleAppointments = [
 
 // Función para inicializar datos de ejemplo
 export const initializeSampleData = () => {
-  const existingData = localStorage.getItem('appointments');
-  if (!existingData || JSON.parse(existingData).length === 0) {
+  const existingAppointments = localStorage.getItem('appointments');
+  if (!existingAppointments || JSON.parse(existingAppointments).length === 0) {
     localStorage.setItem('appointments', JSON.stringify(sampleAppointments));
-    console.log('Datos de ejemplo inicializados');
+    console.log('Datos de citas inicializados');
+  }
+
+  const existingUsers = localStorage.getItem('users');
+  if (!existingUsers || JSON.parse(existingUsers).length === 0) {
+    localStorage.setItem('users', JSON.stringify(sampleUsers));
+    console.log('Datos de usuarios inicializados');
   }
 };

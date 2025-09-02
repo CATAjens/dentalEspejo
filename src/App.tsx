@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import AppointmentModal from './components/AppointmentModal';
 import AdminPage from './pages/AdminPage';
+import LoginPage from './pages/LoginPage';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 function App() {
@@ -29,7 +31,12 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+          } />
           <Route path="/" element={
             <>
               <Header onOpenAppointment={openAppointmentModal} />
