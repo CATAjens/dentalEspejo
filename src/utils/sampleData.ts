@@ -115,15 +115,9 @@ export const sampleAppointments = [
 
 // Función para inicializar datos de ejemplo
 export const initializeSampleData = () => {
-  const existingAppointments = localStorage.getItem('appointments');
-  if (!existingAppointments || JSON.parse(existingAppointments).length === 0) {
+  const existingData = localStorage.getItem('appointments');
+  if (!existingData || JSON.parse(existingData).length === 0) {
     localStorage.setItem('appointments', JSON.stringify(sampleAppointments));
-    console.log('Datos de citas inicializados');
-  }
-
-  const existingUsers = localStorage.getItem('users');
-  if (!existingUsers || JSON.parse(existingUsers).length === 0) {
-    localStorage.setItem('users', JSON.stringify(sampleUsers));
-    console.log('Datos de usuarios inicializados');
+    console.log('Datos de ejemplo inicializados');
   }
 };

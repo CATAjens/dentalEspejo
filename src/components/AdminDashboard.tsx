@@ -29,12 +29,6 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="admin-dashboard">
-      <div className="admin-header">
-        <div className="container">
-
-        </div>
-      </div>
-
       <div className="admin-layout">
         <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
         <div className="admin-main-content">

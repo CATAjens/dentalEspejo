@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface AdminSidebarProps {
@@ -6,8 +6,29 @@ interface AdminSidebarProps {
   onTabChange: (tab: string) => void;
 }
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  isActive: boolean;
+}
+
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, onTabChange }) => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setCurrentUser(user);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('currentUser');
@@ -35,11 +56,37 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, onTabChange }) =
     }
   ];
 
+  const handleLogoutClick = () => {
+    handleLogout();
+  };
+
+  const getRoleDisplayName = (role: string) => {
+    switch (role) {
+      case 'admin':
+        return 'Administrador';
+      case 'doctor':
+        return 'Doctor';
+      case 'receptionist':
+        return 'Recepcionista';
+      default:
+        return 'Usuario';
+    }
+  };
+
   return (
     <div className="admin-sidebar">
       <div className="sidebar-header">
-        <h3><i className="fas fa-tooth"></i> DentalEspejo</h3>
-        <p>Panel de Administración</p>
+        {currentUser ? (
+          <>
+            <h3>{currentUser.name}</h3>
+            <p>{getRoleDisplayName(currentUser.role)}</p>
+          </>
+        ) : (
+          <>
+            <h3><i className="fas fa-tooth"></i> DentalEspejo</h3>
+            <p>Panel de Administración</p>
+          </>
+        )}
       </div>
       
       <nav className="sidebar-nav">
@@ -58,6 +105,20 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, onTabChange }) =
             </div>
           </button>
         ))}
+        
+        {/* Botón de cerrar sesión para responsive */}
+        <button
+          className="nav-item nav-item-logout"
+          onClick={handleLogoutClick}
+        >
+          <div className="nav-item-content">
+            <i className="fas fa-sign-out-alt"></i>
+            <div className="nav-item-text">
+              <span className="nav-label">Cerrar Sesión</span>
+              <span className="nav-description">Salir del sistema</span>
+            </div>
+          </div>
+        </button>
       </nav>
       
       <div className="sidebar-footer">

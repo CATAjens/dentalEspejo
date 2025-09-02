@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-interface HeaderProps {
-  onOpenAppointment: () => void;
-}
+interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = ({ onOpenAppointment }) => {
+const Header: React.FC<HeaderProps> = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -40,10 +38,9 @@ const Header: React.FC<HeaderProps> = ({ onOpenAppointment }) => {
             <li><a href="#home" onClick={() => scrollToSection('home')}>Inicio</a></li>
             <li><a href="#services" onClick={() => scrollToSection('services')}>Servicios</a></li>
             <li><a href="#about" onClick={() => scrollToSection('about')}>Especialistas</a></li>
-            <li><a href="#testimonials" onClick={() => scrollToSection('testimonials')}>Pacientes</a></li>
             <li><a href="#gallery" onClick={() => scrollToSection('gallery')}>Galería</a></li>
-            <li><a href="#" className="nav-cta" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>Agendar</a></li>
-            <li><a href="/login" className="nav-admin">Admin</a></li>
+            <li><a href="#contact" onClick={() => scrollToSection('contact')}>Contacto</a></li>
+            <li><a href="/login">Admin</a></li>
           </ul>
           <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
             <div className="line"></div>

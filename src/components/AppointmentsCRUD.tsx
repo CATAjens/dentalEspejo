@@ -89,8 +89,7 @@ const AppointmentsCRUD: React.FC = () => {
   return (
     <div className="appointments-crud">
       <div className="crud-header">
-        <h2><i className="fas fa-calendar-check"></i> Gestión de Citas</h2>
-        <p>Administra todas las citas de tu clínica dental</p>
+        <h2>Gestión de Citas</h2>
       </div>
 
       {/* Filtros y búsqueda */}

@@ -448,7 +448,6 @@ section {
     padding: 30px;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
-    transition: var(--transition);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -463,28 +462,7 @@ section {
     width: 100%;
     height: 5px;
     background: linear-gradient(to right, var(--primary), var(--secondary));
-    transition: var(--transition);
     z-index: -1;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-lg);
-}
-
-.service-card:hover::before {
-    height: 100%;
-}
-
-.service-card:hover .service-icon img {
-    transform: scale(1.1);
-    filter: brightness(0) invert(1);
-}
-
-.service-card:hover h3,
-.service-card:hover p,
-.service-card:hover .service-link {
-    color: var(--white);
 }
 
 .service-icon {
@@ -499,21 +477,18 @@ section {
 .service-icon img {
     width: 100%;
     height: auto;
-    transition: var(--transition);
 }
 
 .service-card h3 {
     font-size: 1.4rem;
     margin-bottom: 15px;
     color: var(--dark);
-    transition: var(--transition);
 }
 
 .service-card p {
     color: var(--gray);
     font-size: 0.95rem;
     margin-bottom: 20px;
-    transition: var(--transition);
 }
 
 .service-link {
@@ -801,8 +776,17 @@ section {
     flex: 1;
 }
 
-.contact-info {
-    flex: 1;
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.contact-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .contact-form {
@@ -889,10 +873,10 @@ section {
 }
 
 .map-container {
-    margin-top: 30px;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
+    height: 400px;
 }
 
 /* Footer */
@@ -1210,12 +1194,11 @@ section {
 .admin-dashboard {
     min-height: 100vh;
     background-color: #f8f9fa;
-    padding-top: 80px;
 }
 
 .admin-layout {
     display: flex;
-    min-height: calc(100vh - 80px);
+    min-height: 100vh;
 }
 
 .admin-main-content {
@@ -1228,9 +1211,9 @@ section {
 .admin-sidebar {
     position: fixed;
     left: 0;
-    top: 80px;
+    top: 0;
     width: 280px;
-    height: calc(100vh - 80px);
+    height: 100vh;
     background: var(--white);
     box-shadow: var(--shadow-md);
     z-index: 100;
@@ -1326,6 +1309,11 @@ section {
     font-size: 0.8rem;
     color: var(--gray);
     line-height: 1.2;
+}
+
+/* Ocultar botón de cerrar sesión en el menú en desktop */
+.nav-item-logout {
+    display: none;
 }
 
 .sidebar-footer {
@@ -1634,6 +1622,7 @@ section {
     margin-bottom: 8px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
 }
 
@@ -2344,6 +2333,29 @@ section {
         display: none;
     }
     
+    /* Ocultar footer en responsive */
+    .sidebar-footer {
+        display: none;
+    }
+    
+    /* Mostrar y estilizar el botón de cerrar sesión en responsive */
+    .nav-item-logout {
+        display: block;
+        border-left: 2px solid #e0e0e0;
+    }
+    
+    .nav-item-logout:hover {
+        background-color: #ffe6e6;
+    }
+    
+    .nav-item-logout i {
+        color: #dc3545;
+    }
+    
+    .nav-item-logout .nav-label {
+        color: #dc3545;
+    }
+    
     .dashboard-row {
         grid-template-columns: 1fr;
     }
@@ -2527,6 +2539,19 @@ section {
     .form-row {
         flex-direction: column;
         gap: 0;
+    }
+    
+    .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .contact-info-grid {
+        gap: 15px;
+    }
+    
+    .map-container {
+        height: 300px;
     }
 }
 

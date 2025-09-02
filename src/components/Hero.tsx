@@ -20,10 +20,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAppointment }) => {
           <p className="hero-text">Tecnología de vanguardia con un enfoque humano. Descubre la diferencia de una atención dental personalizada.</p>
           <div className="hero-buttons">
             <a href="#" className="btn btn-primary" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>
-              <i className="fas fa-calendar-check"></i> Primera consulta gratis
-            </a>
-            <a href="tel:+525512345678" className="btn btn-secondary">
-              <i className="fas fa-phone-alt"></i> Emergencias 24/7
+              <i className="fas fa-calendar-check"></i> Agenda Cita Gratis
             </a>
           </div>
           <div className="hero-features">
@@ -43,19 +40,6 @@ const Hero: React.FC<HeroProps> = ({ onOpenAppointment }) => {
         </div>
         <div className="hero-image">
           <img src="https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg" alt="Dra. Ana López sonriendo" />
-          <div className="image-badge">
-            <div className="badge-content">
-              <div className="rating">4.9</div>
-              <div className="stars">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </div>
-              <span>+500 reseñas</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>

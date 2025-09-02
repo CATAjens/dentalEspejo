@@ -123,10 +123,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         <div className="login-header">
           <div className="login-logo">
             <i className="fas fa-tooth"></i>
-            <h1>Dental<span style={{ color: '#FF9E00' }}>Espejo</span></h1>
+            <h1>DentalEspejo</h1>
           </div>
-          <h2>Panel de Administración</h2>
-          <p>Ingresa tus credenciales para acceder</p>
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
@@ -139,8 +137,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
           <div className="form-group">
             <label htmlFor="email">
-              <i className="fas fa-envelope"></i>
-              Correo Electrónico
+              Email
             </label>
             <input
               type="email"
@@ -149,7 +146,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               value={formData.email}
               onChange={handleInputChange}
               required
-              placeholder="usuario@clinicadental.com"
               disabled={loading}
               autoComplete="email"
               style={{ pointerEvents: 'auto', userSelect: 'text' }}
@@ -158,8 +154,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
           <div className="form-group">
             <label htmlFor="password">
-              <i className="fas fa-lock"></i>
-              Contraseña
+              Password
             </label>
             <input
               type="password"
@@ -168,7 +163,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               value={formData.password}
               onChange={handleInputChange}
               required
-              placeholder="Ingresa tu contraseña"
               disabled={loading}
               autoComplete="current-password"
               style={{ pointerEvents: 'auto', userSelect: 'text' }}
@@ -187,69 +181,17 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </>
             ) : (
               <>
-                <i className="fas fa-sign-in-alt"></i>
                 Iniciar Sesión
               </>
             )}
           </button>
-
-          {/* Botón de prueba para debug */}
-          <button 
-            type="button" 
-            className="btn btn-secondary"
-            onClick={() => {
-              console.log('Test button clicked');
-              setFormData({
-                email: 'maria.gonzalez@clinicadental.com',
-                password: 'password123'
-              });
-            }}
-            style={{ marginTop: '10px', width: '100%' }}
-          >
-            <i className="fas fa-flask"></i>
-            Llenar Datos de Prueba
-          </button>
-
-          {/* Botón de reinicio */}
-          <button 
-            type="button" 
-            className="btn btn-outline"
-            onClick={() => {
-              localStorage.removeItem('users');
-              localStorage.removeItem('currentUser');
-              window.location.reload();
-            }}
-            style={{ marginTop: '10px', width: '100%', borderColor: '#dc3545', color: '#dc3545' }}
-          >
-            <i className="fas fa-redo"></i>
-            Reiniciar Datos
-          </button>
         </form>
 
         <div className="login-footer">
-          <p>
-            <i className="fas fa-info-circle"></i>
-            Solo personal autorizado puede acceder
-          </p>
           <a href="/" className="back-link">
             <i className="fas fa-arrow-left"></i>
             Volver al sitio
           </a>
-          
-          <div style={{ 
-            marginTop: '15px', 
-            padding: '10px', 
-            backgroundColor: 'rgba(255,255,255,0.1)', 
-            borderRadius: '5px',
-            fontSize: '11px',
-            color: 'rgba(255,255,255,0.8)',
-            textAlign: 'left'
-          }}>
-            <strong>Credenciales de prueba:</strong><br/>
-            Admin: maria.gonzalez@clinicadental.com / password123<br/>
-            Doctor: carlos.ruiz@clinicadental.com / password123<br/>
-            Recepcionista: ana.lopez@clinicadental.com / password123 (inactivo)
-          </div>
         </div>
       </div>
 

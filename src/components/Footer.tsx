@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
           </div>
           
           <div className="footer-col">
-            <h4>Clínica</h4>
+            <h4>Dental</h4>
             <ul>
               {clinicLinks.map((link, index) => (
                 <li key={index}><a href="#">{link}</a></li>
@@ -61,9 +61,9 @@ const Footer: React.FC = () => {
           <div className="footer-col">
             <h4>Contacto</h4>
             <ul className="footer-contact">
-              <li><i className="fas fa-map-marker-alt"></i> Av. Dental 123, CDMX</li>
-              <li><i className="fas fa-phone-alt"></i> +52 55 1234 5678</li>
-              <li><i className="fas fa-envelope"></i> contacto@dentalespejo.com</li>
+              <li><i className="fas fa-map-marker-alt"></i> Calle Nueva N°:438 Cusco</li>
+              <li><i className="fas fa-phone-alt"></i> +51 962236953</li>
+              <li><i className="fas fa-envelope"></i> catajens69@gmail.com</li>
               <li><i className="fas fa-clock"></i> Lun-Vie: 9:00 - 19:00</li>
             </ul>
           </div>

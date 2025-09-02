@@ -30,10 +30,6 @@ const About: React.FC<AboutProps> = ({ onOpenAppointment }) => {
           <div className="image-main">
             <img src="https://images.pexels.com/photos/3779704/pexels-photo-3779704.jpeg" alt="Dr. Carlos Méndez" />
           </div>
-          <div className="image-badge patients">
-            <span className="number">3,200</span>
-            <span>Pacientes atendidos</span>
-          </div>
         </div>
 
         <div className="about-content">
@@ -55,10 +51,7 @@ const About: React.FC<AboutProps> = ({ onOpenAppointment }) => {
           
           <div className="about-buttons">
             <a href="#" className="btn btn-primary" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>
-              <i className="fas fa-calendar-alt"></i> Agendar consulta
-            </a>
-            <a href="#" className="btn btn-outline">
-              <i className="fas fa-user-md"></i> Conoce al equipo completo
+              <i className="fas fa-phone"></i> Agendar consulta
             </a>
           </div>
         </div>

@@ -127,8 +127,7 @@ const AppointmentsCalendar: React.FC<AppointmentsCalendarProps> = ({ onDateSelec
   return (
     <div className="appointments-calendar">
       <div className="calendar-header">
-        <h3><i className="fas fa-calendar-alt"></i> Calendario de Citas</h3>
-        <p>Selecciona una fecha para ver las citas programadas</p>
+        <h3>Calendario de Citas</h3>
       </div>
       
       <div className="calendar-container">

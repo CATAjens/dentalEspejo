@@ -199,7 +199,7 @@ const UsersCRUD: React.FC = () => {
   return (
     <div className="users-crud">
       <div className="crud-header">
-        <h2><i className="fas fa-users"></i> Gestión de Usuarios</h2>
+        <h2>Gestión de Usuarios</h2>
         <button className="btn btn-primary" onClick={() => openModal()}>
           <i className="fas fa-plus"></i> Nuevo Usuario
         </button>
