@@ -8,27 +8,27 @@ const Services: React.FC<ServicesProps> = ({ onOpenAppointment }) => {
   const services = [
     {
       icon: "https://cdn-icons-png.flaticon.com/512/3003/3003184.png",
-      title: "Ortodoncia Digital",
+      title: "Brackets",
       description: "Brackets estéticos y alineadores invisibles con planificación 3D para resultados precisos.",
-      alt: "Ortodoncia"
+      alt: "Brackets"
     },
     {
       icon: "https://cdn-icons-png.flaticon.com/512/3003/3003185.png",
-      title: "Implantes Dentales",
+      title: "Prótesis",
       description: "Reemplazo de dientes perdidos con técnicas mínimamente invasivas y rápida recuperación.",
-      alt: "Implantes"
+      alt: "Prótesis"
     },
     {
       icon: "https://cdn-icons-png.flaticon.com/512/3003/3003187.png",
-      title: "Blanqueamiento LED",
+      title: "Endodoncias",
       description: "Técnica profesional para aclarar varios tonos en una sola sesión sin sensibilidad.",
-      alt: "Blanqueamiento"
+      alt: "Endodoncias"
     },
     {
       icon: "https://cdn-icons-png.flaticon.com/512/3003/3003181.png",
-      title: "Odontopediatría",
+      title: "Implantes",
       description: "Cuidado dental especializado para niños con enfoque lúdico y preventivo.",
-      alt: "Odontopediatría"
+      alt: "Implantes"
     }
   ];
 

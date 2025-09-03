@@ -2,11 +2,10 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   const services = [
-    "Ortodoncia Invisible",
-    "Implantes Dentales", 
-    "Blanqueamiento LED",
-    "Diseño de Sonrisa",
-    "Odontopediatría"
+    "Brackets",
+    "Prótesis", 
+    "Endodoncias",
+    "Implantes"
   ];
 
   const clinicLinks = [
