@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  isActive: boolean;
-  role: 'admin' | 'doctor' | 'receptionist';
-  createdAt: string;
-}
+import { getUsers, createUser, updateUser, deleteUser, type User } from '../services/userService';
 
 const UsersCRUD: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -18,62 +9,31 @@ const UsersCRUD: React.FC = () => {
     name: '',
     email: '',
     password: '',
-    isActive: true,
+    is_active: true,
     role: 'receptionist' as 'admin' | 'doctor' | 'receptionist'
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Cargar usuarios desde localStorage
+  // Cargar usuarios desde Supabase
   useEffect(() => {
-    const savedUsers = localStorage.getItem('users');
-    if (savedUsers) {
-      try {
-        const parsedUsers = JSON.parse(savedUsers);
-        setUsers(parsedUsers);
-      } catch (error) {
-        console.error('Error parsing users from localStorage:', error);
-        setUsers([]);
-      }
-    } else {
-      // Si no hay usuarios, inicializar con datos de ejemplo
-      const sampleUsers = [
-        {
-          id: '1',
-          name: 'Dr. María González',
-          email: 'maria.gonzalez@clinicadental.com',
-          password: 'password123',
-          isActive: true,
-          role: 'admin' as const,
-          createdAt: '2024-01-01T10:00:00Z'
-        },
-        {
-          id: '2',
-          name: 'Dr. Carlos Ruiz',
-          email: 'carlos.ruiz@clinicadental.com',
-          password: 'password123',
-          isActive: true,
-          role: 'doctor' as const,
-          createdAt: '2024-01-02T10:00:00Z'
-        },
-        {
-          id: '3',
-          name: 'Ana López',
-          email: 'ana.lopez@clinicadental.com',
-          password: 'password123',
-          isActive: false,
-          role: 'receptionist' as const,
-          createdAt: '2024-01-03T10:00:00Z'
-        }
-      ];
-      localStorage.setItem('users', JSON.stringify(sampleUsers));
-      setUsers(sampleUsers);
-    }
+    loadUsers();
   }, []);
 
-  // Guardar usuarios en localStorage
-  const saveUsers = (updatedUsers: User[]) => {
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-    setUsers(updatedUsers);
+  const loadUsers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const usersData = await getUsers();
+      setUsers(usersData);
+    } catch (error) {
+      console.error('Error loading users:', error);
+      setError('Error al cargar los usuarios');
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   // Limpiar formulario
   const resetForm = () => {
@@ -81,10 +41,11 @@ const UsersCRUD: React.FC = () => {
       name: '',
       email: '',
       password: '',
-      isActive: true,
+      is_active: true,
       role: 'receptionist'
     });
     setEditingUser(null);
+    setError(null);
   };
 
   // Abrir modal para crear/editar
@@ -95,7 +56,7 @@ const UsersCRUD: React.FC = () => {
         name: user.name,
         email: user.email,
         password: user.password,
-        isActive: user.isActive,
+        is_active: user.is_active,
         role: user.role
       });
     } else {
@@ -141,69 +102,116 @@ const UsersCRUD: React.FC = () => {
   };
 
   // Crear usuario
-  const createUser = () => {
+  const handleCreateUser = async () => {
     if (!validateForm()) return;
 
-    const newUser: User = {
-      id: Date.now().toString(),
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      isActive: formData.isActive,
-      role: formData.role,
-      createdAt: new Date().toISOString()
-    };
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const newUserData = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        is_active: formData.is_active,
+        role: formData.role
+      };
 
-    const updatedUsers = [...users, newUser];
-    saveUsers(updatedUsers);
-    closeModal();
+      await createUser(newUserData);
+      await loadUsers(); // Recargar la lista
+      closeModal();
+    } catch (error) {
+      console.error('Error creating user:', error);
+      setError('Error al crear el usuario');
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Actualizar usuario
-  const updateUser = () => {
+  const handleUpdateUser = async () => {
     if (!validateForm() || !editingUser) return;
 
-    const updatedUsers = users.map(user =>
-      user.id === editingUser.id
-        ? {
-            ...user,
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-            isActive: formData.isActive,
-            role: formData.role
-          }
-        : user
-    );
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const updateData = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        is_active: formData.is_active,
+        role: formData.role
+      };
 
-    saveUsers(updatedUsers);
-    closeModal();
+      await updateUser(editingUser.id, updateData);
+      await loadUsers(); // Recargar la lista
+      closeModal();
+    } catch (error) {
+      console.error('Error updating user:', error);
+      setError('Error al actualizar el usuario');
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Eliminar usuario
-  const deleteUser = (id: string) => {
+  const handleDeleteUser = async (id: string) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-      const updatedUsers = users.filter(user => user.id !== id);
-      saveUsers(updatedUsers);
+      try {
+        setLoading(true);
+        setError(null);
+        
+        await deleteUser(id);
+        await loadUsers(); // Recargar la lista
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        setError('Error al eliminar el usuario');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   // Toggle estado activo
-  const toggleUserStatus = (id: string) => {
-    const updatedUsers = users.map(user =>
-      user.id === id ? { ...user, isActive: !user.isActive } : user
-    );
-    saveUsers(updatedUsers);
+  const toggleUserStatus = async (id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const user = users.find(u => u.id === id);
+      if (user) {
+        await updateUser(id, { is_active: !user.is_active });
+        await loadUsers(); // Recargar la lista
+      }
+    } catch (error) {
+      console.error('Error toggling user status:', error);
+      setError('Error al cambiar el estado del usuario');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="users-crud">
       <div className="crud-header">
         <h2>Gestión de Usuarios</h2>
-        <button className="btn btn-primary" onClick={() => openModal()}>
+        <button className="btn btn-primary" onClick={() => openModal()} disabled={loading}>
           <i className="fas fa-plus"></i> Nuevo Usuario
         </button>
       </div>
+
+      {error && (
+        <div className="error-message" style={{ color: 'red', margin: '10px 0', padding: '10px', backgroundColor: '#ffe6e6', border: '1px solid #ff9999', borderRadius: '4px' }}>
+          {error}
+        </div>
+      )}
+
+      {loading && (
+        <div className="loading-message" style={{ textAlign: 'center', margin: '20px 0' }}>
+          <i className="fas fa-spinner fa-spin"></i> Cargando...
+        </div>
+      )}
 
       <div className="crud-content">
         <div className="table-container">
@@ -227,7 +235,7 @@ const UsersCRUD: React.FC = () => {
                 </tr>
               ) : (
                 users.map(user => (
-                  <tr key={user.id} className={!user.isActive ? 'inactive' : ''}>
+                  <tr key={user.id} className={!user.is_active ? 'inactive' : ''}>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
@@ -239,26 +247,29 @@ const UsersCRUD: React.FC = () => {
                     </td>
                     <td>
                       <button
-                        className={`status-toggle ${user.isActive ? 'active' : 'inactive'}`}
+                        className={`status-toggle ${user.is_active ? 'active' : 'inactive'}`}
                         onClick={() => toggleUserStatus(user.id)}
+                        disabled={loading}
                       >
-                        {user.isActive ? 'Activo' : 'Inactivo'}
+                        {user.is_active ? 'Activo' : 'Inactivo'}
                       </button>
                     </td>
-                    <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td>{new Date(user.created_at).toLocaleDateString()}</td>
                     <td>
                       <div className="action-buttons">
                         <button
                           className="btn btn-sm btn-edit"
                           onClick={() => openModal(user)}
                           title="Editar"
+                          disabled={loading}
                         >
                           <i className="fas fa-edit"></i>
                         </button>
                         <button
                           className="btn btn-sm btn-delete"
-                          onClick={() => deleteUser(user.id)}
+                          onClick={() => handleDeleteUser(user.id)}
                           title="Eliminar"
+                          disabled={loading}
                         >
                           <i className="fas fa-trash"></i>
                         </button>
@@ -284,7 +295,7 @@ const UsersCRUD: React.FC = () => {
             </div>
 
             <div className="modal-body">
-              <form onSubmit={e => { e.preventDefault(); editingUser ? updateUser() : createUser(); }}>
+              <form onSubmit={e => { e.preventDefault(); editingUser ? handleUpdateUser() : handleCreateUser(); }}>
                 <div className="form-group">
                   <label htmlFor="name">Nombre Completo *</label>
                   <input
@@ -343,8 +354,8 @@ const UsersCRUD: React.FC = () => {
                    <label className="checkbox-label">
                      <input
                        type="checkbox"
-                       name="isActive"
-                       checked={formData.isActive}
+                       name="is_active"
+                       checked={formData.is_active}
                        onChange={handleInputChange}
                        style={{ display: 'none' }}
                      />
@@ -354,11 +365,19 @@ const UsersCRUD: React.FC = () => {
                  </div>
 
                 <div className="modal-actions">
-                  <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                  <button type="button" className="btn btn-secondary" onClick={closeModal} disabled={loading}>
                     Cancelar
                   </button>
-                  <button type="submit" className="btn btn-primary">
-                    {editingUser ? 'Actualizar' : 'Crear'} Usuario
+                  <button type="submit" className="btn btn-primary" disabled={loading}>
+                    {loading ? (
+                      <>
+                        <i className="fas fa-spinner fa-spin"></i> Procesando...
+                      </>
+                    ) : (
+                      <>
+                        {editingUser ? 'Actualizar' : 'Crear'} Usuario
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

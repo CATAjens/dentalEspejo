@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { authenticateUser } from '../services/userService';
 
 interface LoginProps {
   onLogin: (user: any) => void;
@@ -20,31 +21,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       const sampleUsers = [
         {
           id: '1',
-          name: 'Dr. María González',
-          email: 'maria.gonzalez@clinicadental.com',
-          password: 'password123',
+          name: 'catajens',
+          email: 'catajens@gmail.com',
+          password: 'jens123',
           isActive: true,
           role: 'admin',
           createdAt: '2024-01-01T10:00:00Z'
-        },
-        {
-          id: '2',
-          name: 'Dr. Carlos Ruiz',
-          email: 'carlos.ruiz@clinicadental.com',
-          password: 'password123',
-          isActive: true,
-          role: 'doctor',
-          createdAt: '2024-01-02T10:00:00Z'
-        },
-        {
-          id: '3',
-          name: 'Ana López',
-          email: 'ana.lopez@clinicadental.com',
-          password: 'password123',
-          isActive: false,
-          role: 'receptionist',
-          createdAt: '2024-01-03T10:00:00Z'
         }
+        
       ];
       localStorage.setItem('users', JSON.stringify(sampleUsers));
       console.log('Sample users initialized');
@@ -99,19 +83,41 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setLoading(true);
     setError('');
 
-    // Simular delay de autenticación
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    const user = validateCredentials(formData.email, formData.password);
-
-    if (user) {
-      console.log('Login successful, saving user session');
-      // Guardar sesión
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      onLogin(user);
-    } else {
-      console.log('Login failed');
-      setError('Credenciales incorrectas o usuario inactivo');
+    try {
+      // Intentar autenticación con Supabase primero
+      const user = await authenticateUser(formData.email, formData.password);
+      
+      if (user) {
+        console.log('Login successful with Supabase, saving user session');
+        // Convertir formato de Supabase a formato local
+        const localUser = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          password: user.password,
+          isActive: user.is_active,
+          role: user.role,
+          createdAt: user.created_at
+        };
+        localStorage.setItem('currentUser', JSON.stringify(localUser));
+        onLogin(localUser);
+      } else {
+        // Fallback a localStorage si Supabase falla
+        console.log('Supabase authentication failed, trying localStorage');
+        const localUser = validateCredentials(formData.email, formData.password);
+        
+        if (localUser) {
+          console.log('Login successful with localStorage');
+          localStorage.setItem('currentUser', JSON.stringify(localUser));
+          onLogin(localUser);
+        } else {
+          console.log('Login failed');
+          setError('Credenciales incorrectas o usuario inactivo');
+        }
+      }
+    } catch (error) {
+      console.error('Error during authentication:', error);
+      setError('Error de conexión. Intenta nuevamente.');
     }
 
     setLoading(false);
