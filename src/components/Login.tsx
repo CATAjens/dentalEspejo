@@ -22,7 +22,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         {
           id: '1',
           name: 'catajens',
-          email: 'catajens@gmail.com',
+          email: 'catajens69@gmail.com',
           password: 'jens123',
           isActive: true,
           role: 'admin',

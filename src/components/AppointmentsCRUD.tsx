@@ -1,57 +1,64 @@
 import React, { useState, useEffect } from 'react';
+import { 
+  getAppointments, 
+  updateAppointmentStatus, 
+  deleteAppointment,
+  type Appointment 
+} from '../services/appointmentService';
 
-interface Appointment {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  service: string;
-  date: string;
-  time: string;
-  message: string;
-  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
-  createdAt: string;
-}
+// Usar la interfaz del servicio
 
 const AppointmentsCRUD: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('all');
+  const [filter, setFilter] = useState<'all' | 'PENDIENTE' | 'CONFIRMADA' | 'COMPLETADA' | 'CANCELADA'>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Cargar citas desde localStorage
+  // Cargar citas desde Supabase
   useEffect(() => {
-    const savedAppointments = localStorage.getItem('appointments');
-    if (savedAppointments) {
-      setAppointments(JSON.parse(savedAppointments));
-    }
+    loadAppointments();
   }, []);
+
+  const loadAppointments = async () => {
+    try {
+      const data = await getAppointments();
+      setAppointments(data);
+    } catch (error) {
+      console.error('Error loading appointments:', error);
+    }
+  };
 
   // Filtrar citas
   const filteredAppointments = appointments.filter(appointment => {
     const matchesFilter = filter === 'all' || appointment.status === filter;
-    const matchesSearch = appointment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         appointment.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch = appointment.patient_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         appointment.patient_email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          appointment.service.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
   // Actualizar estado de cita
-  const updateAppointmentStatus = (id: string, status: Appointment['status']) => {
-    const updatedAppointments = appointments.map(appointment =>
-      appointment.id === id ? { ...appointment, status } : appointment
-    );
-    setAppointments(updatedAppointments);
-    localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
+  const handleUpdateAppointmentStatus = async (id: string, status: Appointment['status']) => {
+    try {
+      await updateAppointmentStatus(id, status);
+      // Recargar citas después de la actualización
+      await loadAppointments();
+    } catch (error) {
+      console.error('Error updating appointment status:', error);
+    }
   };
 
   // Eliminar cita
-  const deleteAppointment = (id: string) => {
+  const handleDeleteAppointment = async (id: string) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar esta cita?')) {
-      const updatedAppointments = appointments.filter(appointment => appointment.id !== id);
-      setAppointments(updatedAppointments);
-      localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
+      try {
+        await deleteAppointment(id);
+        // Recargar citas después de la eliminación
+        await loadAppointments();
+      } catch (error) {
+        console.error('Error deleting appointment:', error);
+      }
     }
   };
 
@@ -67,10 +74,10 @@ const AppointmentsCRUD: React.FC = () => {
   // Obtener color del estado
   const getStatusColor = (status: Appointment['status']) => {
     switch (status) {
-      case 'pending': return '#F39C12';
-      case 'confirmed': return '#2ECC71';
-      case 'completed': return '#3498DB';
-      case 'cancelled': return '#E74C3C';
+      case 'PENDIENTE': return '#F39C12';
+      case 'CONFIRMADA': return '#2ECC71';
+      case 'COMPLETADA': return '#3498DB';
+      case 'CANCELADA': return '#E74C3C';
       default: return '#95A5A6';
     }
   };
@@ -78,11 +85,22 @@ const AppointmentsCRUD: React.FC = () => {
   // Obtener texto del estado
   const getStatusText = (status: Appointment['status']) => {
     switch (status) {
-      case 'pending': return 'Pendiente';
-      case 'confirmed': return 'Confirmada';
-      case 'completed': return 'Completada';
-      case 'cancelled': return 'Cancelada';
+      case 'PENDIENTE': return 'Pendiente';
+      case 'CONFIRMADA': return 'Confirmada';
+      case 'COMPLETADA': return 'Completada';
+      case 'CANCELADA': return 'Cancelada';
       default: return 'Desconocido';
+    }
+  };
+
+  // Obtener nombre del servicio
+  const getServiceName = (service: string) => {
+    switch (service) {
+      case 'BRACKETS': return 'Brackets';
+      case 'PROTESIS': return 'Prótesis';
+      case 'ENDODONCIAS': return 'Endodoncias';
+      case 'IMPLANTES': return 'Implantes';
+      default: return service;
     }
   };
 
@@ -111,26 +129,26 @@ const AppointmentsCRUD: React.FC = () => {
             Todas
           </button>
           <button 
-            className={`filter-btn ${filter === 'pending' ? 'active' : ''}`}
-            onClick={() => setFilter('pending')}
+            className={`filter-btn ${filter === 'PENDIENTE' ? 'active' : ''}`}
+            onClick={() => setFilter('PENDIENTE')}
           >
             Pendientes
           </button>
           <button 
-            className={`filter-btn ${filter === 'confirmed' ? 'active' : ''}`}
-            onClick={() => setFilter('confirmed')}
+            className={`filter-btn ${filter === 'CONFIRMADA' ? 'active' : ''}`}
+            onClick={() => setFilter('CONFIRMADA')}
           >
             Confirmadas
           </button>
           <button 
-            className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
-            onClick={() => setFilter('completed')}
+            className={`filter-btn ${filter === 'COMPLETADA' ? 'active' : ''}`}
+            onClick={() => setFilter('COMPLETADA')}
           >
             Completadas
           </button>
           <button 
-            className={`filter-btn ${filter === 'cancelled' ? 'active' : ''}`}
-            onClick={() => setFilter('cancelled')}
+            className={`filter-btn ${filter === 'CANCELADA' ? 'active' : ''}`}
+            onClick={() => setFilter('CANCELADA')}
           >
             Canceladas
           </button>
@@ -156,18 +174,18 @@ const AppointmentsCRUD: React.FC = () => {
               <tr key={appointment.id}>
                 <td>
                   <div className="patient-info">
-                    <strong>{appointment.name}</strong>
+                    <strong>{appointment.patient_name}</strong>
                   </div>
                 </td>
                 <td>
                   <div className="contact-info">
-                    <div><i className="fas fa-envelope"></i> {appointment.email}</div>
-                    <div><i className="fas fa-phone"></i> {appointment.phone}</div>
+                    <div><i className="fas fa-envelope"></i> {appointment.patient_email}</div>
+                    <div><i className="fas fa-phone"></i> {appointment.patient_phone}</div>
                   </div>
                 </td>
-                <td>{appointment.service}</td>
-                <td>{formatDate(appointment.date)}</td>
-                <td>{appointment.time}</td>
+                <td>{getServiceName(appointment.service)}</td>
+                <td>{formatDate(appointment.appointment_date)}</td>
+                <td>{appointment.appointment_time}</td>
                 <td>
                   <span 
                     className="status-badge"
@@ -191,16 +209,16 @@ const AppointmentsCRUD: React.FC = () => {
                     <select
                       className="status-select"
                       value={appointment.status}
-                      onChange={(e) => updateAppointmentStatus(appointment.id, e.target.value as Appointment['status'])}
+                      onChange={(e) => handleUpdateAppointmentStatus(appointment.id, e.target.value as Appointment['status'])}
                     >
-                      <option value="pending">Pendiente</option>
-                      <option value="confirmed">Confirmada</option>
-                      <option value="completed">Completada</option>
-                      <option value="cancelled">Cancelada</option>
+                      <option value="PENDIENTE">Pendiente</option>
+                      <option value="CONFIRMADA">Confirmada</option>
+                      <option value="COMPLETADA">Completada</option>
+                      <option value="CANCELADA">Cancelada</option>
                     </select>
                     <button 
                       className="btn-action btn-delete"
-                      onClick={() => deleteAppointment(appointment.id)}
+                      onClick={() => handleDeleteAppointment(appointment.id)}
                       title="Eliminar"
                     >
                       <i className="fas fa-trash"></i>
@@ -234,27 +252,27 @@ const AppointmentsCRUD: React.FC = () => {
             <div className="modal-body">
               <div className="detail-group">
                 <label>Paciente:</label>
-                <p>{selectedAppointment.name}</p>
+                <p>{selectedAppointment.patient_name}</p>
               </div>
               <div className="detail-group">
                 <label>Email:</label>
-                <p>{selectedAppointment.email}</p>
+                <p>{selectedAppointment.patient_email}</p>
               </div>
               <div className="detail-group">
                 <label>Teléfono:</label>
-                <p>{selectedAppointment.phone}</p>
+                <p>{selectedAppointment.patient_phone}</p>
               </div>
               <div className="detail-group">
                 <label>Servicio:</label>
-                <p>{selectedAppointment.service}</p>
+                <p>{getServiceName(selectedAppointment.service)}</p>
               </div>
               <div className="detail-group">
                 <label>Fecha:</label>
-                <p>{formatDate(selectedAppointment.date)}</p>
+                <p>{formatDate(selectedAppointment.appointment_date)}</p>
               </div>
               <div className="detail-group">
                 <label>Hora:</label>
-                <p>{selectedAppointment.time}</p>
+                <p>{selectedAppointment.appointment_time}</p>
               </div>
               <div className="detail-group">
                 <label>Estado:</label>
@@ -265,10 +283,10 @@ const AppointmentsCRUD: React.FC = () => {
                   {getStatusText(selectedAppointment.status)}
                 </span>
               </div>
-              {selectedAppointment.message && (
+              {selectedAppointment.notes && (
                 <div className="detail-group">
-                  <label>Mensaje:</label>
-                  <p>{selectedAppointment.message}</p>
+                  <label>Notas:</label>
+                  <p>{selectedAppointment.notes}</p>
                 </div>
               )}
             </div>

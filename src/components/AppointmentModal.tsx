@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { createAppointment } from '../services/appointmentService';
 
 interface AppointmentModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAppointmentCreated?: () => void;
 }
 
-const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose }) => {
+const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, onAppointmentCreated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,6 +17,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose }) 
     time: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -24,40 +28,58 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose }) 
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Crear objeto de cita con ID único
-    const newAppointment = {
-      id: Date.now().toString(),
-      ...formData,
-      status: 'pending' as const,
-      createdAt: new Date().toISOString()
-    };
+    setLoading(true);
+    setError('');
 
-    // Obtener citas existentes del localStorage
-    const existingAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-    
-    // Agregar nueva cita
-    const updatedAppointments = [...existingAppointments, newAppointment];
-    
-    // Guardar en localStorage
-    localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
-    
-    console.log('Cita agendada:', newAppointment);
-    alert('¡Cita agendada exitosamente! Te contactaremos pronto para confirmar.');
-    
-    // Limpiar formulario
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      service: '',
-      date: '',
-      time: '',
-      message: ''
-    });
-    onClose();
+    try {
+      // Validar que el servicio sea válido
+      if (!['BRACKETS', 'PROTESIS', 'ENDODONCIAS', 'IMPLANTES'].includes(formData.service)) {
+        throw new Error('Servicio no válido');
+      }
+
+      // Crear objeto de cita para Supabase
+      const appointmentData = {
+        patient_name: formData.name,
+        patient_email: formData.email,
+        patient_phone: formData.phone,
+        service: formData.service as 'BRACKETS' | 'PROTESIS' | 'ENDODONCIAS' | 'IMPLANTES',
+        appointment_date: formData.date,
+        appointment_time: formData.time,
+        status: 'PENDIENTE' as const,
+        notes: formData.message || undefined
+      };
+
+      // Crear cita en Supabase
+      const newAppointment = await createAppointment(appointmentData);
+      
+      console.log('Cita agendada:', newAppointment);
+      alert('¡Cita agendada exitosamente! Te contactaremos pronto para confirmar.');
+      
+      // Limpiar formulario
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        date: '',
+        time: '',
+        message: ''
+      });
+      
+      // Notificar al componente padre que se creó una cita
+      if (onAppointmentCreated) {
+        onAppointmentCreated();
+      }
+      
+      onClose();
+    } catch (error) {
+      console.error('Error al agendar cita:', error);
+      setError('Error al agendar la cita. Por favor, intenta nuevamente.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -73,6 +95,13 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose }) 
         </div>
         
         <form className="appointment-form" onSubmit={handleSubmit}>
+          {error && (
+            <div className="error-message">
+              <i className="fas fa-exclamation-triangle"></i>
+              {error}
+            </div>
+          )}
+          
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="name">Nombre Completo *</label>
@@ -123,13 +152,10 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose }) 
                 required
               >
                 <option value="">Selecciona un servicio</option>
-                <option value="consulta">Consulta General</option>
-                <option value="ortodoncia">Ortodoncia Digital</option>
-                <option value="implantes">Implantes Dentales</option>
-                <option value="blanqueamiento">Blanqueamiento LED</option>
-                <option value="diseno">Diseño de Sonrisa</option>
-                <option value="pediatria">Odontopediatría</option>
-                <option value="emergencia">Emergencia Dental</option>
+                <option value="BRACKETS">Brackets</option>
+                <option value="PROTESIS">Prótesis</option>
+                <option value="ENDODONCIAS">Endodoncias</option>
+                <option value="IMPLANTES">Implantes</option>
               </select>
             </div>
           </div>
@@ -183,11 +209,20 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose }) 
           </div>
 
           <div className="form-actions">
-            <button type="button" className="btn btn-outline" onClick={onClose}>
+            <button type="button" className="btn btn-outline" onClick={onClose} disabled={loading}>
               Cancelar
             </button>
-            <button type="submit" className="btn btn-primary">
-              <i className="fas fa-calendar-check"></i> Agendar Cita
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? (
+                <>
+                  <i className="fas fa-spinner fa-spin"></i>
+                  Agendando...
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-calendar-check"></i> Agendar Cita
+                </>
+              )}
             </button>
           </div>
         </form>

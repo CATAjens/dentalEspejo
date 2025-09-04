@@ -49,6 +49,10 @@ function App() {
               <AppointmentModal
                 isOpen={isAppointmentModalOpen}
                 onClose={closeAppointmentModal}
+                onAppointmentCreated={() => {
+                  // Opcional: mostrar notificación o recargar datos
+                  console.log('Nueva cita creada');
+                }}
               />
             </>
           } />
