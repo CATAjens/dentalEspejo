@@ -39,13 +39,21 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
         throw new Error('Servicio no válido');
       }
 
+      // Validar y formatear la fecha
+      const selectedDate = new Date(formData.date);
+      const formattedDate = selectedDate.toISOString().split('T')[0]; // YYYY-MM-DD
+      
+      console.log('Fecha seleccionada:', formData.date);
+      console.log('Fecha formateada:', formattedDate);
+      console.log('Hora seleccionada:', formData.time);
+
       // Crear objeto de cita para Supabase
       const appointmentData = {
         patient_name: formData.name,
         patient_email: formData.email,
         patient_phone: formData.phone,
         service: formData.service as 'BRACKETS' | 'PROTESIS' | 'ENDODONCIAS' | 'IMPLANTES',
-        appointment_date: formData.date,
+        appointment_date: formattedDate, // Usar fecha formateada
         appointment_time: formData.time,
         status: 'PENDIENTE' as const,
         notes: formData.message || undefined

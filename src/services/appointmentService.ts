@@ -22,7 +22,7 @@ export const getAppointments = async (): Promise<Appointment[]> => {
     const { data, error } = await supabase
       .from('appointments')
       .select('*')
-      .order('appointment_date', { ascending: true });
+      .order('created_at', { ascending: false }); // Ordenar por fecha de creación, más recientes primero
 
     if (error) {
       console.error('Error fetching appointments:', error);
@@ -43,7 +43,7 @@ export const getAppointmentsByStatus = async (status: Appointment['status']): Pr
       .from('appointments')
       .select('*')
       .eq('status', status)
-      .order('appointment_date', { ascending: true });
+      .order('created_at', { ascending: false }); // Ordenar por fecha de creación, más recientes primero
 
     if (error) {
       console.error('Error fetching appointments by status:', error);
@@ -171,7 +171,7 @@ export const searchAppointments = async (searchTerm: string): Promise<Appointmen
       .from('appointments')
       .select('*')
       .or(`patient_name.ilike.%${searchTerm}%,patient_email.ilike.%${searchTerm}%,patient_phone.ilike.%${searchTerm}%`)
-      .order('appointment_date', { ascending: true });
+      .order('created_at', { ascending: false }); // Ordenar por fecha de creación, más recientes primero
 
     if (error) {
       console.error('Error searching appointments:', error);
