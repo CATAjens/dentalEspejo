@@ -1,69 +1,83 @@
-# React + TypeScript + Vite
+# DentalEspejo - Sitio Web Clínica Dental
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sitio web moderno y profesional para la centro dental DentalEspejo, desarrollado con React + TypeScript + Vite.
 
-Currently, two official plugins are available:
+## 🦷 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Servicios Dentales**: Información detallada sobre tratamientos especializados
+- **Sistema de Citas**: Agendamiento online con integración a Supabase
+- **Galería de Resultados**: Casos reales de pacientes con antes y después
+- **Panel de Administración**: Gestión de citas y usuarios
+- **Diseño Responsive**: Optimizado para todos los dispositivos
+- **WhatsApp Integration**: Botón flotante para contacto directo
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Base de Datos**: Supabase
+- **Estilos**: CSS3 con variables personalizadas
+- **Iconos**: Font Awesome
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Instalación y Desarrollo
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+```bash
+# Clonar el repositorio
+git clone https://github.com/CATAjens/dentalEspejo.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
+npm run dev
+
+# Construir para producción
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 Estructura del Proyecto
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── components/          # Componentes React
+│   ├── About.tsx       # Sección sobre la doctora
+│   ├── Gallery.tsx     # Galería de resultados
+│   ├── Services.tsx    # Servicios dentales
+│   └── ...
+├── assets/             # Imágenes estáticas
+├── services/           # Servicios de API
+└── config/            # Configuración de Supabase
+```
+
+## 🔧 Configuración
+
+1. **Supabase**: Configura tu base de datos en `src/config/supabase.ts`
+2. **Variables de entorno**: Crea un archivo `.env` con tus credenciales
+3. **Imágenes**: Reemplaza las imágenes en `src/assets/` con las de tu clínica
+
+## Funcionalidades
+
+- ✅ Agendamiento de citas online
+- ✅ Galería de casos reales
+- ✅ Información de servicios
+- ✅ Panel administrativo
+- ✅ Formulario de contacto
+- ✅ Integración con WhatsApp
+
+## Despliegue
+
+El proyecto está optimizado para desplegarse en:
+- Vercel
+- Netlify
+- GitHub Pages
+- Cualquier hosting estático
+
+## Contacto
+
+**Clínica DentalEspejo**
+- Dra. Lisseth Huallpa Espejo
+- Especialista en rehabilitación oral y estética dental
+
+---
+
+Desarrollado con para la salud dental de nuestros pacientes.
