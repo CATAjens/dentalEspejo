@@ -50,7 +50,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
       // Crear objeto de cita para Supabase
       const appointmentData = {
         patient_name: formData.name,
-        patient_email: formData.email || null, // Permitir null si está vacío
+        patient_email: formData.email || '', // Usar string vacío en lugar de null
         patient_phone: formData.phone,
         service: formData.service as 'BRACKETS' | 'PROTESIS' | 'ENDODONCIAS' | 'IMPLANTES',
         appointment_date: formattedDate, // Usar fecha formateada

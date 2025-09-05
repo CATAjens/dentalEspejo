@@ -5,7 +5,7 @@ import Login from '../components/Login';
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleLogin = (user: any) => {
+  const handleLogin = () => {
     // Redirigir al dashboard de administración
     navigate('/admin');
   };
