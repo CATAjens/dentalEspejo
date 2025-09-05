@@ -1,4 +1,8 @@
 import React from 'react';
+import bracketsImage from '../assets/brackets.jpg';
+import protesisImage from '../assets/protesis.jpg';
+import endodonciaImage from '../assets/endodoncia.jpg';
+import implanteImage from '../assets/implante.jpg';
 
 interface ServicesProps {
   onOpenAppointment: () => void;
@@ -7,25 +11,25 @@ interface ServicesProps {
 const Services: React.FC<ServicesProps> = ({ onOpenAppointment }) => {
   const services = [
     {
-      icon: "https://cdn-icons-png.flaticon.com/512/3003/3003184.png",
+      icon: bracketsImage,
       title: "Brackets",
       description: "Brackets estéticos y alineadores invisibles con planificación 3D para resultados precisos.",
       alt: "Brackets"
     },
     {
-      icon: "https://cdn-icons-png.flaticon.com/512/3003/3003185.png",
+      icon: protesisImage,
       title: "Prótesis",
       description: "Reemplazo de dientes perdidos con técnicas mínimamente invasivas y rápida recuperación.",
       alt: "Prótesis"
     },
     {
-      icon: "https://cdn-icons-png.flaticon.com/512/3003/3003187.png",
+      icon: endodonciaImage,
       title: "Endodoncias",
       description: "Técnica profesional para aclarar varios tonos en una sola sesión sin sensibilidad.",
       alt: "Endodoncias"
     },
     {
-      icon: "https://cdn-icons-png.flaticon.com/512/3003/3003181.png",
+      icon: implanteImage,
       title: "Implantes",
       description: "Cuidado dental especializado para niños con enfoque lúdico y preventivo.",
       alt: "Implantes"
@@ -44,7 +48,7 @@ const Services: React.FC<ServicesProps> = ({ onOpenAppointment }) => {
         <div className="services-grid">
           {services.map((service, index) => (
             <div key={index} className="service-card">
-              <div className="service-icon">
+              <div className="service-icon service-icon-full">
                 <img src={service.icon} alt={service.alt} />
               </div>
               <h3>{service.title}</h3>

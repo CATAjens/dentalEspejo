@@ -1,4 +1,5 @@
 import React from 'react';
+import doctoraImage from '../assets/doctora.jpg';
 
 interface AboutProps {
   onOpenAppointment: () => void;
@@ -9,7 +10,7 @@ const About: React.FC<AboutProps> = ({ onOpenAppointment }) => {
     {
       icon: "fas fa-graduation-cap",
       title: "Formación Académica",
-      description: "Universidad Nacional Autónoma de México, Especialidad en Harvard Dental School"
+      description: "Universidad Nacional, Especialidad en Dental estetica"
     },
     {
       icon: "fas fa-award",
@@ -28,14 +29,14 @@ const About: React.FC<AboutProps> = ({ onOpenAppointment }) => {
       <div className="container">
         <div className="about-image">
           <div className="image-main">
-            <img src="https://images.pexels.com/photos/3779704/pexels-photo-3779704.jpeg" alt="Dr. Carlos Méndez" />
+            <img src={doctoraImage} alt="Dra. Lisseth Huallpa" />
           </div>
         </div>
 
         <div className="about-content">
           <span className="section-subtitle">Nuestro Equipo</span>
-          <h2 className="section-title">Conoce al <span>Dr. Carlos Méndez</span></h2>
-          <p className="about-text">Especialista en rehabilitación oral y estética dental con certificaciones internacionales. El Dr. Méndez combina precisión técnica con un enfoque artístico para crear sonrisas naturales y armoniosas.</p>
+          <h2 className="section-title">Conoce ala <span>Dra. Lisseth Huallpa Espejo</span></h2>
+          <p className="about-text">Especialista en rehabilitación oral y estética dental con certificaciones acreditadas. La Dra. Lisseth combina precisión técnica con un enfoque artístico para crear sonrisas naturales y armoniosas.</p>
           
           <div className="about-features">
             {features.map((feature, index) => (

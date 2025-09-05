@@ -1,4 +1,5 @@
 import React from 'react';
+import dentalespejoImage from '../assets/dentalespejo.jpg';
 
 interface HeroProps {
   onOpenAppointment: () => void;
@@ -39,7 +40,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAppointment }) => {
           </div>
         </div>
         <div className="hero-image">
-          <img src="https://images.pexels.com/photos/4173239/pexels-photo-4173239.jpeg" alt="Dra. Ana López sonriendo" />
+          <img src={dentalespejoImage} alt="Dra. Ana López sonriendo" />
         </div>
       </div>
     </section>

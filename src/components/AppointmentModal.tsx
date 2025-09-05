@@ -50,7 +50,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
       // Crear objeto de cita para Supabase
       const appointmentData = {
         patient_name: formData.name,
-        patient_email: formData.email,
+        patient_email: formData.email || null, // Permitir null si está vacío
         patient_phone: formData.phone,
         service: formData.service as 'BRACKETS' | 'PROTESIS' | 'ENDODONCIAS' | 'IMPLANTES',
         appointment_date: formattedDate, // Usar fecha formateada
@@ -124,15 +124,14 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Correo Electrónico *</label>
+              <label htmlFor="email">Correo Electrónico</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                required
-                placeholder="tu@email.com"
+                placeholder="tu@gmail.com"
               />
             </div>
           </div>
@@ -147,7 +146,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
                 value={formData.phone}
                 onChange={handleInputChange}
                 required
-                placeholder="+52 55 1234 5678"
+                placeholder="+51 964 689 186"
               />
             </div>
             <div className="form-group">

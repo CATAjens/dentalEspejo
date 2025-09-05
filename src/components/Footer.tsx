@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
             <a href="#" className="footer-logo">
               <i className="fas fa-tooth"></i> Dental<span>Espejo</span>
             </a>
-            <p>Clínica dental especializada en tratamientos de alta estética y tecnología digital para resultados naturales y duraderos.</p>
+            <p>Centro dental especializada en tratamientos de alta estética y tecnología digital para resultados naturales y duraderos.</p>
             <div className="footer-social">
               <a href="#"><i className="fab fa-facebook-f"></i></a>
               <a href="#"><i className="fab fa-instagram"></i></a>

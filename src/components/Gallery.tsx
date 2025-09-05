@@ -1,30 +1,34 @@
 import React from 'react';
+import pacienteunoImage from '../assets/pacienteuno.jpg';
+import pacientecuatroImage from '../assets/pacientecuatro.jpg';
+import pacientetresImage from '../assets/pacientetres.jpg';
+import pacientedosImage from '../assets/pacientedos.jpg';
 
 const Gallery: React.FC = () => {
   const galleryItems = [
     {
-      image: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-      title: "Diseño de Sonrisa",
-      description: "Carillas de porcelana",
-      alt: "Antes y después 1"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-      title: "Ortodoncia",
-      description: "Tratamiento de 12 meses",
-      alt: "Antes y después 2"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-      title: "Blanqueamiento",
-      description: "+6 tonos en 1 sesión",
-      alt: "Antes y después 3"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+      image: pacientetresImage,
       title: "Implantes",
+      description: "Tratamiento integral",
+      alt: "Implantes"
+    },
+    {
+      image: pacienteunoImage,
+      title: "Brackets",
+      description: "Tratamiento de 12 meses",
+      alt: "Brackets"
+    },
+    {
+      image: pacientecuatroImage,
+      title: "Prótesis",
+      description: "Años de garantía",
+      alt: "Prótesis"
+    },
+    {
+      image: pacientedosImage,
+      title: "Endodoncias",
       description: "Rehabilitación completa",
-      alt: "Antes y después 4"
+      alt: "Endodoncias"
     }
   ];
 
@@ -44,7 +48,6 @@ const Gallery: React.FC = () => {
               <div className="gallery-overlay">
                 <h4>{item.title}</h4>
                 <p>{item.description}</p>
-                <a href="#" className="gallery-link">Ver caso completo</a>
               </div>
             </div>
           ))}
