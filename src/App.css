@@ -3588,3 +3588,144 @@ section {
         font-size: 1rem;
     }
 }
+
+/* Email Confirmation Modal */
+.email-confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.email-confirmation-content {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-xl);
+}
+
+.email-confirmation-content .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.email-confirmation-content .modal-header h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.email-confirmation-content .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    transition: all 0.3s ease;
+}
+
+.email-confirmation-content .close-btn:hover {
+    background: var(--gray-light);
+    color: var(--dark);
+}
+
+.appointment-summary {
+    background: var(--gray-light);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+}
+
+.appointment-summary h4 {
+    margin: 0 0 1rem 0;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.summary-item strong {
+    color: var(--dark);
+    min-width: 100px;
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.confirmation-actions .btn {
+    flex: 1;
+    max-width: 200px;
+}
+
+.success-icon {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.success-icon i {
+    font-size: 4rem;
+    color: var(--success);
+}
+
+.email-confirmation-content h3 {
+    text-align: center;
+    color: var(--success);
+    margin-bottom: 1rem;
+}
+
+.email-confirmation-content p {
+    text-align: center;
+    color: var(--gray);
+    margin-bottom: 0.5rem;
+}
+
+.closing-message {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--gray);
+}
+
+.error-message {
+    background: var(--error-light);
+    color: var(--error);
+    padding: 1rem;
+    border-radius: var(--radius);
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.error-message i {
+    margin-right: 0.5rem;
+}

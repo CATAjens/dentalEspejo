@@ -9,11 +9,9 @@ const Footer: React.FC = () => {
   ];
 
   const clinicLinks = [
-    "Nuestro Equipo",
-    "Tecnología",
-    "Galería",
-    "Blog",
-    "Trabaja con Nosotros"
+    { name: "Nuestro Equipo", href: "#about" },
+    { name: "Tecnología", href: "#services" },
+    { name: "Galería", href: "#gallery" }
   ];
 
   const legalLinks = [
@@ -32,10 +30,10 @@ const Footer: React.FC = () => {
             </a>
             <p>Centro dental especializada en tratamientos de alta estética y tecnología digital para resultados naturales y duraderos.</p>
             <div className="footer-social">
-              <a href="#"><i className="fab fa-facebook-f"></i></a>
-              <a href="#"><i className="fab fa-instagram"></i></a>
-              <a href="#"><i className="fab fa-youtube"></i></a>
-              <a href="#"><i className="fab fa-tiktok"></i></a>
+              <span><i className="fab fa-facebook-f"></i></span>
+              <span><i className="fab fa-instagram"></i></span>
+              <span><i className="fab fa-youtube"></i></span>
+              <span><i className="fab fa-tiktok"></i></span>
             </div>
           </div>
           
@@ -52,7 +50,7 @@ const Footer: React.FC = () => {
             <h4>Dental</h4>
             <ul>
               {clinicLinks.map((link, index) => (
-                <li key={index}><a href="#">{link}</a></li>
+                <li key={index}><a href={link.href}>{link.name}</a></li>
               ))}
             </ul>
           </div>
@@ -70,11 +68,11 @@ const Footer: React.FC = () => {
         
         <div className="footer-bottom">
           <div className="copyright">
-            &copy; 2023 DentalEspejo. Todos los derechos reservados.
+            &copy; 2025 DentalEspejo. Todos los derechos reservados.
           </div>
           <div className="legal-links">
             {legalLinks.map((link, index) => (
-              <a key={index} href="#">{link}</a>
+              <span key={index}>{link}</span>
             ))}
           </div>
         </div>

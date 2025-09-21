@@ -40,7 +40,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAppointment }) => {
           </div>
         </div>
         <div className="hero-image">
-          <img src={dentalespejoImage} alt="Dra. Ana López sonriendo" />
+          <img src={dentalespejoImage} alt="Dra. Lisseth Huallpa sonriendo" />
         </div>
       </div>
     </section>

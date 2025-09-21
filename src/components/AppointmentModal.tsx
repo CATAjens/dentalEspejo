@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createAppointment } from '../services/appointmentService';
+import EmailConfirmation from './EmailConfirmation';
 
 interface AppointmentModalProps {
   isOpen: boolean;
@@ -19,6 +20,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showEmailConfirmation, setShowEmailConfirmation] = useState(false);
+  const [createdAppointment, setCreatedAppointment] = useState<any>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -63,7 +66,22 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
       const newAppointment = await createAppointment(appointmentData);
       
       console.log('Cita agendada:', newAppointment);
-      alert('¡Cita agendada exitosamente! Te contactaremos pronto para confirmar.');
+      
+      // Guardar datos de la cita para el email
+      setCreatedAppointment({
+        patient_name: formData.name,
+        patient_email: formData.email,
+        appointment_date: formattedDate,
+        appointment_time: formData.time,
+        service: formData.service,
+        patient_phone: formData.phone,
+        notes: formData.message,
+        appointment_id: newAppointment.id,
+        numero_cita: `CIT-${newAppointment.id.slice(-8).toUpperCase()}`
+      });
+      
+      // Mostrar modal de confirmación por email
+      setShowEmailConfirmation(true);
       
       // Limpiar formulario
       setFormData({
@@ -232,6 +250,19 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
           </div>
         </form>
       </div>
+      
+      {/* Modal de confirmación por email */}
+      {showEmailConfirmation && createdAppointment && (
+        <EmailConfirmation
+          appointmentData={createdAppointment}
+          onClose={() => {
+            setShowEmailConfirmation(false);
+            setCreatedAppointment(null);
+            onClose(); // Cerrar también el modal principal
+            onAppointmentCreated?.(); // Notificar que se creó la cita
+          }}
+        />
+      )}
     </div>
   );
 };
