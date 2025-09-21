@@ -61,7 +61,7 @@ const Services: React.FC<ServicesProps> = ({ onOpenAppointment }) => {
         </div>
         
         <div className="services-cta">
-          <a href="#" className="btn btn-outline" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>
+          <a href="#" className="btn btn-static" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>
             <i className="fas fa-list-alt"></i> Agendar consulta
           </a>
         </div>

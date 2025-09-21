@@ -15,7 +15,7 @@ Sitio web moderno y profesional para la centro dental DentalEspejo, desarrollado
 
 - **Frontend**: React 18 + TypeScript
 - **Build Tool**: Vite
-- **Base de Datos**: Supabase
+- **Base de Datos**: Supabase     
 - **Estilos**: CSS3 con variables personalizadas
 - **Iconos**: Font Awesome
 

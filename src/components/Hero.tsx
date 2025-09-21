@@ -27,7 +27,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenAppointment }) => {
           <div className="hero-features">
             <div className="feature">
               <i className="fas fa-check-circle"></i>
-              <span>15+ años de experiencia</span>
+              <span>10 años de experiencia</span>
             </div>
             <div className="feature">
               <i className="fas fa-check-circle"></i>

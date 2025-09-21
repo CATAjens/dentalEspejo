@@ -216,19 +216,17 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({ isOpen, onClose, on
           </div>
 
           <div className="form-actions">
-            <button type="button" className="btn btn-outline" onClick={onClose} disabled={loading}>
+            <button type="button" className="btn btn-static" onClick={onClose} disabled={loading}>
               Cancelar
             </button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+            <button type="submit" className="btn btn-static" disabled={loading}>
               {loading ? (
                 <>
                   <i className="fas fa-spinner fa-spin"></i>
                   Agendando...
                 </>
               ) : (
-                <>
-                  <i className="fas fa-calendar-check"></i> Agendar Cita
-                </>
+                <>Agendar Cita</>
               )}
             </button>
           </div>

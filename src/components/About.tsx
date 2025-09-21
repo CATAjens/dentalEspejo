@@ -10,12 +10,17 @@ const About: React.FC<AboutProps> = ({ onOpenAppointment }) => {
     {
       icon: "fas fa-graduation-cap",
       title: "Formación Académica",
-      description: "Universidad Nacional, Especialidad en Dental estetica"
+      description: "Universidad Nacional de San Antonio Abad del Cusco"
     },
     {
       icon: "fas fa-award",
       title: "Certificaciones",
-      description: "Invisalign Diamond Provider, Diplomado en Implantología Avanzada"
+      description: "Licenciada en Cirujano Dentista"
+    },
+    {
+      icon: "fas fa-clock",
+      title: "Experiencia",
+      description: "10 años de experiencia"
     },
     {
       icon: "fas fa-heart",
@@ -51,8 +56,8 @@ const About: React.FC<AboutProps> = ({ onOpenAppointment }) => {
           </div>
           
           <div className="about-buttons">
-            <a href="#" className="btn btn-primary" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>
-              <i className="fas fa-phone"></i> Agendar consulta
+            <a href="#" className="btn btn-static" onClick={(e) => { e.preventDefault(); onOpenAppointment(); }}>
+              <i className="fas fa-list-alt"></i> Agendar consulta
             </a>
           </div>
         </div>
