@@ -17,6 +17,11 @@ export interface Appointment {
   updated_by?: string;
 }
 
+export interface AppointmentTimeSlot {
+  appointment_time: string;
+  status: 'PENDIENTE' | 'CONFIRMADA' | 'COMPLETADA' | 'CANCELADA';
+}
+
 // Obtener todas las citas
 export const getAppointments = async (): Promise<Appointment[]> => {
   try {
@@ -204,7 +209,7 @@ export const searchAppointments = async (searchTerm: string): Promise<Appointmen
 };
 
 // Obtener citas por fecha específica
-export const getAppointmentsByDate = async (date: string): Promise<Appointment[]> => {
+export const getAppointmentsByDate = async (date: string): Promise<AppointmentTimeSlot[]> => {
   try {
     const { data, error } = await supabase
       .from('appointments')
