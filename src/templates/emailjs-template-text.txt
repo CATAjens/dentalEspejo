@@ -1,7 +1,6 @@
 🦷 DentalEspejo
 Confirmación de Cita
 
-Hola {{patient_name}},
 
 Tu cita ha sido agendada exitosamente. Aquí tienes todos los detalles:
 
@@ -11,26 +10,22 @@ Número de Cita: {{numero_cita}}
 Fecha: {{appointment_date}}
 Hora: {{appointment_time}}
 Servicio: {{service}}
-Teléfono de contacto: {{patient_phone}}
-{% if notes %}Observaciones: {{notes}}{% endif %}
 
 📍 Ubicación
 ─────────────────────────
 Dirección: Calle Nueva N°:438 Cusco
 Teléfono: +51 962236953
-Email: catajens69@gmail.com
 
 📋 Instrucciones importantes
 ─────────────────────────
 • Llega 10 minutos antes de tu cita
 • Trae tu identificación
 • Si necesitas cancelar, hazlo con al menos 24 horas de anticipación
-• Mantén tu teléfono disponible por si necesitamos contactarte
+
 
 ¡Esperamos verte pronto en DentalEspejo!
 
 Saludos cordiales,
-Dra. Lisseth Huallpa Espejo
 Centro Odontológico DentalEspejo
 
 ─────────────────────────

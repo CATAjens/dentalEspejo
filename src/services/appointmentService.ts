@@ -9,7 +9,8 @@ export interface Appointment {
   appointment_date: string;
   appointment_time: string;
   status: 'PENDIENTE' | 'CONFIRMADA' | 'COMPLETADA' | 'CANCELADA';
-  notes?: string;
+  notes: string; // Ya no es opcional, siempre tendrá valor
+  numero_cita: number;
   created_at: string;
   updated_at: string;
   created_by?: string;
@@ -58,8 +59,25 @@ export const getAppointmentsByStatus = async (status: Appointment['status']): Pr
 };
 
 // Crear una nueva cita
-export const createAppointment = async (appointmentData: Omit<Appointment, 'id' | 'created_at' | 'updated_at'>): Promise<Appointment> => {
+export const createAppointment = async (appointmentData: Omit<Appointment, 'id' | 'numero_cita' | 'created_at' | 'updated_at'>): Promise<Appointment> => {
   try {
+    // Verificar si ya existe una cita en la misma fecha y hora
+    const { data: existingAppointments, error: checkError } = await supabase
+      .from('appointments')
+      .select('id')
+      .eq('appointment_date', appointmentData.appointment_date)
+      .eq('appointment_time', appointmentData.appointment_time)
+      .in('status', ['PENDIENTE', 'CONFIRMADA']);
+
+    if (checkError) {
+      console.error('Error checking existing appointments:', checkError);
+      throw checkError;
+    }
+
+    if (existingAppointments && existingAppointments.length > 0) {
+      throw new Error('Ya existe una cita en este horario. Por favor, selecciona otro horario.');
+    }
+
     const { data, error } = await supabase
       .from('appointments')
       .insert([appointmentData])
@@ -79,7 +97,7 @@ export const createAppointment = async (appointmentData: Omit<Appointment, 'id' 
 };
 
 // Actualizar una cita
-export const updateAppointment = async (id: string, appointmentData: Partial<Omit<Appointment, 'id' | 'created_at' | 'updated_at'>>): Promise<Appointment> => {
+export const updateAppointment = async (id: string, appointmentData: Partial<Omit<Appointment, 'id' | 'numero_cita' | 'created_at' | 'updated_at'>>): Promise<Appointment> => {
   try {
     const { data, error } = await supabase
       .from('appointments')
@@ -181,6 +199,27 @@ export const searchAppointments = async (searchTerm: string): Promise<Appointmen
     return data || [];
   } catch (error) {
     console.error('Error in searchAppointments:', error);
+    throw error;
+  }
+};
+
+// Obtener citas por fecha específica
+export const getAppointmentsByDate = async (date: string): Promise<Appointment[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('appointments')
+      .select('appointment_time, status')
+      .eq('appointment_date', date)
+      .in('status', ['PENDIENTE', 'CONFIRMADA']); // Solo citas activas
+
+    if (error) {
+      console.error('Error fetching appointments by date:', error);
+      throw error;
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Error in getAppointmentsByDate:', error);
     throw error;
   }
 };

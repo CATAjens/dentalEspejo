@@ -10,7 +10,7 @@
     <!-- Header con logo -->
     <div style="text-align: center; background: linear-gradient(135deg, #4FC3F7, #29B6F6); color: white; padding: 30px; border-radius: 10px 10px 0 0;">
         <h1 style="margin: 0; font-size: 28px;">🦷 DentalEspejo</h1>
-        <h2 style="margin: 10px 0 0 0; font-size: 20px; font-weight: normal;">Confirmación de Cita</h2>
+
     </div>
     
     <!-- Contenido principal -->
@@ -22,88 +22,71 @@
         </p>
         
         <p style="font-size: 16px; margin-bottom: 25px;">
-            Tu cita ha sido agendada exitosamente. Aquí tienes todos los detalles:
+            Tu cita ha sido agendada exitosamente.
         </p>
         
-        <!-- Detalles de la cita -->
-        <div style="background: #f8f9fa; padding: 25px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #4FC3F7;">
-            <h3 style="color: #4FC3F7; margin: 0 0 20px 0; font-size: 18px;">📅 Detalles de la Cita</h3>
+        <!-- Contenedor unificado de información -->
+        <div style="background: #f8f9fa; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #4FC3F7; overflow: hidden;">
             
-            <div style="margin-bottom: 15px;">
-                <strong>Número de Cita:</strong> {{numero_cita}}
+            <!-- Detalles de la cita -->
+            <div style="padding: 25px 25px 0 25px;">
+                <h3 style="color: #4FC3F7; margin: 0 0 20px 0; font-size: 18px;">Detalles de la Cita</h3>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>Número de Cita:</strong> {{numero_cita}}
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>Fecha:</strong> {{appointment_date}}
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>Hora:</strong> {{appointment_time}}
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>Servicio:</strong> {{service}}
+                </div>
+
             </div>
             
-            <div style="margin-bottom: 15px;">
-                <strong>Fecha:</strong> {{appointment_date}}
+            <!-- Separador visual -->
+            <div style="border-top: 1px solid #e0e0e0; margin: 0 25px;"></div>
+            
+            <!-- Información de contacto -->
+            <div style="padding: 25px 25px 0 25px;">
+                <h3 style="color: #4FC3F7; margin: 0 0 20px 0; font-size: 18px;">Ubicación</h3>         
+                <div style="margin-bottom: 10px;">
+                    <strong>Dirección:</strong> Calle Nueva N°:438 Cusco
+                </div>           
+                <div style="margin-bottom: 10px;">
+                    <strong>Teléfono:</strong> +51 964689186
+                </div>
             </div>
             
-            <div style="margin-bottom: 15px;">
-                <strong>Hora:</strong> {{appointment_time}}
+            <!-- Separador visual -->
+            <div style="border-top: 1px solid #e0e0e0; margin: 0 25px;"></div>
+            
+            <!-- Instrucciones -->
+            <div style="padding: 25px;">
+                <h3 style="color: #4FC3F7; margin: 0 0 20px 0; font-size: 18px;">Instrucciones</h3>
+                
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li style="margin-bottom: 8px;">Llega 10 minutos antes de tu cita</li>
+                    <li style="margin-bottom: 8px;">Trae tu identificación</li>
+                    <li style="margin-bottom: 8px;">Si necesitas cancelar, hazlo con al menos 24 horas de anticipación</li>
+                </ul>
             </div>
             
-            <div style="margin-bottom: 15px;">
-                <strong>Servicio:</strong> {{service}}
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <strong>Teléfono de contacto:</strong> {{patient_phone}}
-            </div>
-            
-            {% if notes %}
-            <div style="margin-bottom: 15px;">
-                <strong>Observaciones:</strong> {{notes}}
-            </div>
-            {% endif %}
-        </div>
-        
-        <!-- Información de contacto -->
-        <div style="background: #e8f5e8; padding: 25px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #4caf50;">
-            <h3 style="color: #2e7d32; margin: 0 0 20px 0; font-size: 18px;">📍 Ubicación</h3>
-            
-            <div style="margin-bottom: 10px;">
-                <strong>Dirección:</strong> Calle Nueva N°:438 Cusco
-            </div>
-            
-            <div style="margin-bottom: 10px;">
-                <strong>Teléfono:</strong> +51 962236953
-            </div>
-            
-            <div>
-                <strong>Email:</strong> catajens69@gmail.com
-            </div>
-        </div>
-        
-        <!-- Instrucciones -->
-        <div style="background: #fff3e0; padding: 25px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #ff9800;">
-            <h3 style="color: #ef6c00; margin: 0 0 20px 0; font-size: 18px;">📋 Instrucciones importantes</h3>
-            
-            <ul style="margin: 0; padding-left: 20px;">
-                <li style="margin-bottom: 8px;">Llega 10 minutos antes de tu cita</li>
-                <li style="margin-bottom: 8px;">Trae tu identificación</li>
-                <li style="margin-bottom: 8px;">Si necesitas cancelar, hazlo con al menos 24 horas de anticipación</li>
-                <li style="margin-bottom: 8px;">Mantén tu teléfono disponible por si necesitamos contactarte</li>
-            </ul>
         </div>
         
         <!-- Mensaje de cierre -->
-        <p style="font-size: 16px; margin-bottom: 20px;">
-            ¡Esperamos verte pronto en DentalEspejo!
-        </p>
         
         <p style="font-size: 16px; margin-bottom: 30px;">
             Saludos cordiales,<br>
-            <strong>Dra. Lisseth Huallpa Espejo</strong><br>
-            <em>Centro Odontológico DentalEspejo</em>
-        </p>
-        
+            <em>Centro Odontológico Espejo</em>
         <!-- Aviso -->
-        <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; text-align: center; font-size: 12px; color: #666; border: 1px solid #ddd;">
-            <p style="margin: 0;">
-                Este es un correo automático, por favor no respondas a este mensaje.
-            </p>
-        </div>
-    </div>
-    
+    </div>  
     <!-- Footer -->
     <div style="background: #2c3e50; color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 12px;">
         <p style="margin: 0;">

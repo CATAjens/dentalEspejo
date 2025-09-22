@@ -15,6 +15,7 @@ import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
+
 function App() {
   const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
 
@@ -51,7 +52,6 @@ function App() {
                 onClose={closeAppointmentModal}
                 onAppointmentCreated={() => {
                   // Opcional: mostrar notificación o recargar datos
-                  console.log('Nueva cita creada');
                 }}
               />
             </>
